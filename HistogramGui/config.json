@@ -1,44 +1,103 @@
 {
 "dat_file1":{
    "options":{
-   	"numOfEvents":10000,
-   	"treeName":"TestTree",
+   	"numOfEvents":3851,
+   	"treeName":"Summary/tree",
    	"branchName":"entry",
-   	"myDataFile":"bindata",
-   	"rootDataFile":"TestData.root"
+   	"myDataFile":"bindata_4Mu",
+   	"rootDataFile":"RootAnalysis_Analysis4Mu.root"
    },
    "histos":[
    		{
-   			"name":"mass",
+   			"name":"mass4Mu",
    			"bins":128,
+   			"min":0,
+   			"max":256
+   		},
+      {
+   			"name":"massZ1",
+   			"bins":64,
    			"min":0,
    			"max":128
    		},
-   		{
-   			"name":"ptL1",
-   			"bins":128,
+      {
+   			"name":"massZ2",
+   			"bins":64,
    			"min":0,
    			"max":128
    		},
-   		{
-   			"name":"ptL2",
-   			"bins":128,
+      {
+   			"name":"muon1ID",
+   			"bins":256,
+   			"min":0,
+   			"max":256
+   		},
+      {
+   			"name":"muon2ID",
+   			"bins":256,
+   			"min":0,
+   			"max":256
+   		},
+      {
+   			"name":"muon3ID",
+   			"bins":256,
+   			"min":0,
+   			"max":256
+   		},
+      {
+   			"name":"muon4ID",
+   			"bins":256,
+   			"min":0,
+   			"max":256
+   		},
+      {
+   			"name":"muon1Isolation",
+   			"bins":64,
+   			"min":0,
+   			"max":1
+   		},
+      {
+   			"name":"muon2Isolation",
+   			"bins":64,
+   			"min":0,
+   			"max":5
+   		},
+      {
+   			"name":"muon3Isolation",
+   			"bins":64,
+   			"min":0,
+   			"max":10
+   		},
+      {
+   			"name":"muon4Isolation",
+   			"bins":64,
+   			"min":0,
+   			"max":20
+   		},
+      {
+   			"name":"muon1Pt",
+   			"bins":64,
+   			"min":0,
+   			"max":256
+   		},
+      {
+   			"name":"muon2Pt",
+   			"bins":32,
    			"min":0,
    			"max":128
    		},
-   		{
-   			"name":"isoL1",
-   			"bins":128,
+      {
+   			"name":"muon3Pt",
+   			"bins":32,
    			"min":0,
-   			"max":128
+   			"max":64
    		},
-   		{
-   			"name":"isoL2",
-   			"bins":128,
+      {
+   			"name":"muon4Pt",
+   			"bins":32,
    			"min":0,
-   			"max":128
+   			"max":32
    		}
-   		
    ]
   }
 }

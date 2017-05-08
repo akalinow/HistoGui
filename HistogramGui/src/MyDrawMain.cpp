@@ -125,31 +125,40 @@ void HistoDrawPane::render(wxDC&  dc)
 	for(int a=0;a<histovec.size();++a){
 		drawHisto(dc,histovec[a].histo,histovec[a].r.GetLeftTop(),histovec[a].r.GetSize());
 	}
-
+///TEST
+/*
+  bool sameFrame = true;
+	for(int a=0;a<histovec.size();++a){
+		drawHisto(dc,histovec[0].histo,histovec[a].r.GetLeftTop(),histovec[a].r.GetSize(), sameFrame);
+	}
+*/
 
 }
 /** Here we draw all the histogram i.e. bins, ticks, labels, frame, and so on
  *
  */
-void HistoDrawPane::drawHisto(wxDC& dc, MyHistogramWrapper & hist, wxPoint from, wxSize hsize)
+void HistoDrawPane::drawHisto(wxDC& dc, MyHistogramWrapper & hist, wxPoint from, wxSize hsize,
+	                            bool sameFrame)
 {
 	wxFont signFont(min(hsize.y,hsize.x)/20, wxFontFamily::wxFONTFAMILY_DEFAULT,wxFONTSTYLE_NORMAL,wxFontWeight::wxFONTWEIGHT_NORMAL);
 	dc.SetFont(signFont);
 	dc.SetBrush(*wxWHITE_BRUSH); // blue filling
 	dc.SetPen( wxPen( wxColor(0,0,0), 3) ); // 10-pixels-thick pink outline
-	dc.DrawRectangle(from, hsize);
+
+	if(!sameFrame) dc.DrawRectangle(from, hsize);
 	wxString mstr ( hist.title.c_str(),  wxConvUTF8);
 	wxRect r ( from.x + hsize.x/2-50, from.y + hsize.y/12-50,100,100);
 
-	dc.DrawLabel(mstr,r,wxALIGN_CENTER);
+	if(!sameFrame) dc.DrawLabel(mstr,r,wxALIGN_CENTER);
 	//dc.DrawText(mstr,from.x + hsize.x/2, from.y + hsize.y/8);
 
-	drawTics(dc,hist,from,hsize);
+	if(!sameFrame) drawTics(dc,hist,from,hsize);
 
 	for(int i =0; i < hist.bins->size();++i){
 		int x = from.x + i * hsize.x / hist.bins->size();
 		int y =int ( from.y + (1-hist.getNormalizedBin(i)) * hsize.y);
 
+    if(sameFrame) dc.SetPen( wxPen( wxColor(255,0,0), 3) );
 		//dc.DrawPoint( wxPoint(x,y));
 		dc.DrawCircle( wxPoint(x,y),1);
 	}

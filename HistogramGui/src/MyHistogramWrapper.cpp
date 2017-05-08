@@ -9,6 +9,7 @@
 #include <MyHistogramWrapper.h>
 #include<cmath>
 #include<cstdlib>
+#include<iostream>
 #include "HistoCreator.h"
 
 MyHistogramWrapper::MyHistogramWrapper(int n, float xmin, float  xmax) : xmin(xmin), xmax(xmax)
@@ -45,7 +46,6 @@ void MyHistogramWrapper::setH()
 float MyHistogramWrapper::getNormalizedBin(int num)
 {
     return (float)((*bins)[num] -hmin) /(float)(hmax-hmin);
-
 }
 
 /*Testing function: poissonian distribution, requires *bins to be allocated manually
