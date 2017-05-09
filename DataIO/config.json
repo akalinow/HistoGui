@@ -5,7 +5,7 @@
    	"treeName":"Summary/tree",
    	"branchName":"entry",
    	"myDataFile":"bindata_4Mu",
-   	"rootDataFile":"RootAnalysis_Analysis4Mu.root"
+   	"rootDataFile":"RootAnalysis_Analysis4Mu_Data.root"
    },
    "histos":[
    		{
@@ -31,72 +31,6 @@
    			"bins":256,
    			"min":0,
    			"max":256
-   		},
-      {
-   			"name":"muon2ID",
-   			"bins":256,
-   			"min":0,
-   			"max":256
-   		},
-      {
-   			"name":"muon3ID",
-   			"bins":256,
-   			"min":0,
-   			"max":256
-   		},
-      {
-   			"name":"muon4ID",
-   			"bins":256,
-   			"min":0,
-   			"max":256
-   		},
-      {
-   			"name":"muon1Isolation",
-   			"bins":64,
-   			"min":0,
-   			"max":1
-   		},
-      {
-   			"name":"muon2Isolation",
-   			"bins":64,
-   			"min":0,
-   			"max":5
-   		},
-      {
-   			"name":"muon3Isolation",
-   			"bins":64,
-   			"min":0,
-   			"max":10
-   		},
-      {
-   			"name":"muon4Isolation",
-   			"bins":64,
-   			"min":0,
-   			"max":20
-   		},
-      {
-   			"name":"muon1Pt",
-   			"bins":64,
-   			"min":0,
-   			"max":256
-   		},
-      {
-   			"name":"muon2Pt",
-   			"bins":32,
-   			"min":0,
-   			"max":128
-   		},
-      {
-   			"name":"muon3Pt",
-   			"bins":32,
-   			"min":0,
-   			"max":64
-   		},
-      {
-   			"name":"muon4Pt",
-   			"bins":32,
-   			"min":0,
-   			"max":32
    		}
    ]
   }
