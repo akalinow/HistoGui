@@ -12,7 +12,7 @@
    			"name":"mass4Mu",
    			"bins":128,
    			"min":0,
-   			"max":256
+   			"max":2560
    		},
       {
    			"name":"massZ1",

@@ -126,10 +126,12 @@ void HistoDrawPane::render(wxDC&  dc)
 		drawHisto(dc,histovec[a].histo,histovec[a].r.GetLeftTop(),histovec[a].r.GetSize());
 	}
 ///TEST
+/*
   bool sameFrame = true;
 	for(int a=0;a<histovec.size();++a){
 		drawHisto(dc,histovec[0].histo,histovec[a].r.GetLeftTop(),histovec[a].r.GetSize(), sameFrame);
 	}
+*/	
 ////
 }
 /** Here we draw all the histogram i.e. bins, ticks, labels, frame, and so on
