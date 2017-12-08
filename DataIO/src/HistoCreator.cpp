@@ -43,9 +43,8 @@ void HistoCreator::processTree() {
 	TFile * file = new TFile( hc.rootDataFile.c_str());
 	TTree* tree = (TTree*) file->Get(hc.treeName.c_str());
 	fstream file1(hc.myDataFile.c_str(), fstream::out | fstream::binary);
-	tree->GetEntries();
-	float val[32];
-	for (int i = 0; i < 32; ++i)
+	float val[64];
+	for (int i = 0; i < 64; ++i)
 		val[i] = 0;
 	tree->SetBranchAddress(hc.branchName.c_str(), val);
 	for (int i = 0; i <  hc.numOfEvents; ++i) {
@@ -114,9 +113,8 @@ void HistoCreator::runTests(){
 	}
 	TFile * file = new TFile(hc.rootDataFile.c_str());
 	TTree* tree = (TTree*) file->Get(hc.treeName.c_str());
-	tree->GetEntries();
-	float val[32];
-	for (int i = 0; i < 32; ++i)val[i] = 0;
+	float val[64];
+	for (int i = 0; i < 64; ++i)val[i] = 0;
 	tree->SetBranchAddress(hc.branchName.c_str(), val);
 	for (int i = 0; i <  hc.numOfEvents; ++i) {
 			tree->GetEntry(i);
@@ -133,6 +131,6 @@ void HistoCreator::runTests(){
 			errors+= histos[i][j]!= histos_copy[i][j];
 		}
 	cout<<"Errors: "<<errors<<".";
-	if(errors == 0) cout<<" Everything is fine.";
+	if(errors == 0) cout<<" Everything is fine."<<std::endl;
 	else cerr<<"What a terrible failure";
 }
