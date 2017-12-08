@@ -46,6 +46,7 @@ void HistoCreator::processTree() {
 	float val[64];
 	for (int i = 0; i < 64; ++i)
 		val[i] = 0;
+
 	tree->SetBranchAddress(hc.branchName.c_str(), val);
 	for (int i = 0; i <  hc.numOfEvents; ++i) {
 		tree->GetEntry(i);
@@ -115,6 +116,7 @@ void HistoCreator::runTests(){
 	TTree* tree = (TTree*) file->Get(hc.treeName.c_str());
 	float val[64];
 	for (int i = 0; i < 64; ++i)val[i] = 0;
+
 	tree->SetBranchAddress(hc.branchName.c_str(), val);
 	for (int i = 0; i <  hc.numOfEvents; ++i) {
 			tree->GetEntry(i);
@@ -128,6 +130,12 @@ void HistoCreator::runTests(){
 	int errors=0;
 	for(int i =0;i < histos.size();++i)
 		for(int j =0; j<histos[i].size();++j){
+			if(histos[i][j]!= histos_copy[i][j]){
+				std::cout<<"i: "<<i<<" j: "<<j<<" histos[i][j]: "<<histos[i][j]
+				         <<" histos_copy[i][j]: "<<histos_copy[i][j]<<std::endl;
+
+			}
+
 			errors+= histos[i][j]!= histos_copy[i][j];
 		}
 	cout<<"Errors: "<<errors<<".";

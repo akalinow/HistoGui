@@ -46,7 +46,7 @@ public:
     void paintNow();
 
     void render(wxDC& dc);
-    void drawHisto(wxDC& dc, MyHistogramWrapper & h, wxPoint from, wxSize hsize);
+    void drawHisto(wxDC& dc, MyHistogramWrapper & h, wxPoint from, wxSize hsize, bool sameFrame=false);
     void drawTics(wxDC& dc, MyHistogramWrapper & h, wxPoint from, wxSize hsize);
     void mouseDown(wxMouseEvent& event);
 
