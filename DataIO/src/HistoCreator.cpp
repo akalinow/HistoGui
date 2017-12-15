@@ -9,6 +9,7 @@
 #include "TFile.h"
 #include "TTree.h"
 #include "TLeaf.h"
+#include "TDataType.h"
 #include<fstream>
 #include<iostream>
 #include<DataSource.h>
@@ -43,18 +44,49 @@ void HistoCreator::processTree() {
 	TFile * file = new TFile( hc.rootDataFile.c_str());
 	TTree* tree = (TTree*) file->Get(hc.treeName.c_str());
 	fstream file1(hc.myDataFile.c_str(), fstream::out | fstream::binary);
-	float val[64];
-	for (int i = 0; i < 64; ++i)
-		val[i] = 0;
+	double valDouble[64];
+	float valFloat[64];
+	int valInt[64];
+	int branchType[64];
+	double val;
+	TClass *aClassPtr;
+	EDataType aDataType;
+	for (int i = 0; i < 64; ++i){
+	  valDouble[i] = 0;
+	  valFloat[i] = 0;
+	  valInt[i] = 0;
+	  branchType[i] = 0;
+	}
 
-	tree->SetBranchAddress(hc.branchName.c_str(), val);
+	for(int iVariable=0;iVariable<hc.vec.size();++iVariable){
+	  TBranch *branch = tree->GetBranch(hc.vec[iVariable].name.c_str());	  
+	  if(!branch) continue;
+	  branch->GetExpectedType(aClassPtr,aDataType);	 
+	  if(aDataType==EDataType::kInt_t){
+	    tree->SetBranchAddress(hc.vec[iVariable].name.c_str(),&valInt[iVariable]);
+	    branchType[iVariable] = EDataType::kInt_t;
+	  }
+	  if(aDataType==EDataType::kFloat_t){
+	    tree->SetBranchAddress(hc.vec[iVariable].name.c_str(),&valFloat[iVariable]);
+	    branchType[iVariable] = EDataType::kFloat_t;
+	  }
+	  if(aDataType==EDataType::kDouble_t){
+	    tree->SetBranchAddress(hc.vec[iVariable].name.c_str(),&valDouble[iVariable]);
+	    branchType[iVariable] = EDataType::kDouble_t;
+	  }
+	}
+
 	for (int i = 0; i <  hc.numOfEvents; ++i) {
 		tree->GetEntry(i);
 		for (int k = 0; k < hc.vec.size(); ++k) {
-			unsigned int j = hc.getBin(k, val[k]);
-			file1.write((char*) &j, hc.vec[k].bytes);
+		  if(branchType[k]==EDataType::kInt_t) val = valInt[k];
+		  if(branchType[k]==EDataType::kFloat_t) val = valFloat[k];
+		  if(branchType[k]==EDataType::kDouble_t) val = valDouble[k];
+		  unsigned int j = hc.getBin(k, val);
+		  file1.write((char*) &j, hc.vec[k].bytes);
 		}
 	}
+	
 	file1.close();
 
 }
@@ -114,17 +146,51 @@ void HistoCreator::runTests(){
 	}
 	TFile * file = new TFile(hc.rootDataFile.c_str());
 	TTree* tree = (TTree*) file->Get(hc.treeName.c_str());
-	float val[64];
-	for (int i = 0; i < 64; ++i)val[i] = 0;
 
-	tree->SetBranchAddress(hc.branchName.c_str(), val);
-	for (int i = 0; i <  hc.numOfEvents; ++i) {
-			tree->GetEntry(i);
-			for (int k = 0; k < hc.vec.size(); ++k) {
-						unsigned int j = hc.getBin(k, val[k]);
-						histos_copy[k][j]++;
-			}
+	double valDouble[64];
+	float valFloat[64];
+	int valInt[64];
+	int branchType[64];
+	double val;
+	TClass *aClassPtr;
+	EDataType aDataType;
+	for (int i = 0; i < 64; ++i){
+	  valDouble[i] = 0;
+	  valFloat[i] = 0;
+	  valInt[i] = 0;
+	  branchType[i] = 0;
 	}
+      
+	for(int iVariable=0;iVariable<hc.vec.size();++iVariable){
+	  TBranch *branch = tree->GetBranch(hc.vec[iVariable].name.c_str());	  
+	  if(!branch) continue;
+	  branch->GetExpectedType(aClassPtr,aDataType);	 
+	  if(aDataType==EDataType::kInt_t){
+	    tree->SetBranchAddress(hc.vec[iVariable].name.c_str(),&valInt[iVariable]);
+	    branchType[iVariable] = EDataType::kInt_t;
+	  }
+	  if(aDataType==EDataType::kFloat_t){
+	    tree->SetBranchAddress(hc.vec[iVariable].name.c_str(),&valFloat[iVariable]);
+	    branchType[iVariable] = EDataType::kFloat_t;
+	  }
+	  if(aDataType==EDataType::kDouble_t){
+	    tree->SetBranchAddress(hc.vec[iVariable].name.c_str(),&valDouble[iVariable]);
+	    branchType[iVariable] = EDataType::kDouble_t;;
+	  }
+	}
+
+	for (int i = 0; i <  hc.numOfEvents; ++i) {
+		tree->GetEntry(i);
+		for (int k = 0; k < hc.vec.size(); ++k) {
+		  if(branchType[k]==EDataType::kInt_t) val = valInt[k];
+		  if(branchType[k]==EDataType::kFloat_t) val = valFloat[k];
+		  if(branchType[k]==EDataType::kDouble_t) val = valDouble[k];
+		  unsigned int j = hc.getBin(k, val);
+		histos_copy[k][j]++;
+		}
+	}
+
+
 	processTree();
 	createHistos();
 	int errors=0;
@@ -138,7 +204,7 @@ void HistoCreator::runTests(){
 
 			errors+= histos[i][j]!= histos_copy[i][j];
 		}
-	cout<<"Errors: "<<errors<<".";
+	cout<<" Errors: "<<errors<<".";
 	if(errors == 0) cout<<" Everything is fine."<<std::endl;
 	else cerr<<"What a terrible failure";
 }
